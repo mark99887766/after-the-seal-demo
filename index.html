@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#241713">
+  <meta name="description" content="原创宫廷权谋互动故事《封匣之后》测试版">
+  <title>封匣之后</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <p class="eyebrow">原创宫廷权谋互动故事 · 测试版</p>
+      <h1 id="game-title">封匣之后</h1>
+      <p id="theme" class="theme"></p>
+    </header>
+
+    <section id="error" class="card error" hidden></section>
+
+    <article id="scene" class="card">
+      <div class="scene-meta">
+        <span id="node-type" class="badge"></span>
+        <span id="progress"></span>
+      </div>
+      <h2 id="node-title">正在读取……</h2>
+      <p id="node-text" class="scene-text"></p>
+
+      <section id="echo-section" class="information" hidden>
+        <h3>旧选择的回响</h3>
+        <div id="echo-list"></div>
+      </section>
+
+      <section id="clue-section" class="information" hidden>
+        <h3>现场与记录</h3>
+        <div id="clue-list"></div>
+      </section>
+
+      <section id="fact-section" class="information" hidden>
+        <h3>当前认知</h3>
+        <div id="fact-list"></div>
+      </section>
+
+      <div id="choices" class="choices"></div>
+    </article>
+
+    <details class="card state-card">
+      <summary>测试信息：查看当前状态</summary>
+      <pre id="state"></pre>
+    </details>
+
+    <footer>
+      <button id="restart" class="secondary" type="button">重新开始</button>
+      <p>当前版本验证位阶、证据链、传闻、选择代价和延迟回响，不代表最终美术与完整演出。</p>
+    </footer>
+  </main>
+
+  <script src="story-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
