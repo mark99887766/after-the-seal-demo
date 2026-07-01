@@ -1,0 +1,51 @@
+name: Verify GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Wait for deployed page
+        id: check
+        shell: bash
+        run: |
+          URL="https://mark99887766.github.io/after-the-seal-demo/"
+          STATUS="failed"
+          HTTP_CODE="000"
+          for attempt in $(seq 1 18); do
+            HTTP_CODE=$(curl -L -sS -o /tmp/site.html -w "%{http_code}" "$URL" || true)
+            if [ "$HTTP_CODE" = "200" ] && grep -q "封匣之后" /tmp/site.html; then
+              STATUS="success"
+              break
+            fi
+            sleep 10
+          done
+          {
+            echo "# Deployment status"
+            echo
+            echo "- Status: ${STATUS}"
+            echo "- HTTP: ${HTTP_CODE}"
+            echo "- URL: ${URL}"
+            echo "- Checked: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          } > deployment-status.md
+
+      - name: Commit verification result
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add deployment-status.md
+          git commit -m "chore: record Pages deployment status" || exit 0
+          git push
